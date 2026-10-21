@@ -1,0 +1,148 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-background: #020617;
+  --color-surface: #0f172a;
+  --color-primary: #3b82f6;
+  --color-primary-light: #60a5fa;
+  --color-muted: #94a3b8;
+  --color-border: #1e293b;
+  --color-card: rgba(241, 245, 249, 0.1);
+  --color-card-hover: rgba(241, 245, 249, 0.16);
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.avatar-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.avatar-glow::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.35) 0%,
+    rgba(59, 130, 246, 0.12) 45%,
+    transparent 70%
+  );
+  z-index: -1;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes link-reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-reveal {
+  opacity: 0;
+  animation: link-reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0ms;
+}
+
+.link-reveal {
+  opacity: 0;
+  animation: link-reveal-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+.link-card {
+  background-color: var(--color-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease,
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease;
+}
+
+.link-card:hover {
+  transform: translateY(-2px);
+  background-color: var(--color-card-hover);
+  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.12);
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+}
+
+.social-link {
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.footer-reveal {
+  opacity: 0;
+  animation: link-reveal-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 600ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .profile-reveal,
+  .link-reveal,
+  .footer-reveal,
+  .avatar-glow::before {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .link-card:hover,
+  .social-link:hover {
+    transform: none;
+  }
+}
