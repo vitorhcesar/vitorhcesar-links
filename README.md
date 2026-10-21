@@ -206,3 +206,9 @@ Loaders simplify your data fetching logic dramatically. Check out more informati
 You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
 
 For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+
+## Licença
+
+O código deste repositório está sob a licença [MIT](LICENSE).
+
+Fotos, nome, textos, redes sociais e as marcas dos projetos (RayTickets, Planeja Post) ficam de fora e continuam reservados.
