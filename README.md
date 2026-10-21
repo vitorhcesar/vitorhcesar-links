@@ -1,214 +1,74 @@
-Welcome to your new TanStack Start app!
+<div align="center">
 
-# Getting Started
+# 🔗 Links — Vítor H. Cesar
 
-To run this application:
+Minha página de links (estilo Linktree), feita do zero: portfólio, redes sociais e canais de contato em um só lugar.
+
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![TanStack Start](https://img.shields.io/badge/TanStack_Start-FF4154?style=for-the-badge&logo=reactquery&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white) ![Bun](https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white)
+
+**[🌐 Ver ao vivo](https://links.vitorhcesar.com.br)**
+
+</div>
+
+## ✨ Funcionalidades
+
+- Cards de links e ícones de redes sociais (GitHub, LinkedIn, Instagram, TikTok, YouTube)
+- Links opcionais configurados por variáveis de ambiente: só aparecem se definidos (LinkedIn, e-mail, WhatsApp)
+- **SEO:** canonical, Open Graph, `robots.txt` e `sitemap.xml` gerados por rota
+- Favicons e web manifest
+
+## 🛠️ Stack
+
+- **Framework:** TanStack Start (React + TanStack Router, SSR com Nitro)
+- **Linguagem:** TypeScript
+- **Estilo:** Tailwind CSS v4, Lucide Icons
+- **Build e runtime:** Vite, Bun
+- **Qualidade:** ESLint, Prettier, React Compiler
+
+## 📁 Estrutura
+
+```
+src/
+├── components/   # LinkCard, SocialLinks, fundo e ícones
+├── lib/          # configuração do site e SEO
+└── routes/       # página inicial, robots.txt e sitemap.xml
+public/           # favicons e manifest
+```
+
+## 🚀 Como rodar
 
 ```bash
 bun install
-bun --bun run dev
+cp .env.example .env   # preencha as variáveis
+bun --bun run dev      # http://localhost:3000
 ```
 
-# Building For Production
+| Script | O que faz |
+|---|---|
+| `dev` | Servidor de desenvolvimento na porta 3000 |
+| `build` | Build de produção |
+| `preview` | Pré-visualiza o build |
+| `generate-routes` | Gera a árvore de rotas do TanStack Router |
+| `lint` / `format` / `check` | ESLint e Prettier |
 
-To build this application for production:
+## 🔐 Variáveis de ambiente
 
-```bash
-bun --bun run build
-```
+Veja `.env.example`.
 
-## Styling
+| Variável | Uso |
+|---|---|
+| `VITE_SITE_URL` | URL pública (canonical, Open Graph, sitemap) |
+| `VITE_PORTFOLIO_URL` | Link para o portfólio |
+| `VITE_LINKEDIN_URL` | Link do LinkedIn (opcional) |
+| `VITE_CONTACT_EMAIL` | Link de e-mail (opcional) |
+| `VITE_WHATSAPP_NUMBER` | Link do WhatsApp |
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+## 📄 Licença
 
-### Removing Tailwind CSS
+[MIT](LICENSE)
 
-If you prefer not to use Tailwind CSS:
+## 👤 Autor
 
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json`
+Feito por **Vítor H. Cesar**, Desenvolvedor Full Stack.
 
-## Linting & Formatting
-
-
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
-
-```bash
-bun --bun run lint
-bun --bun run format
-bun --bun run check
-```
-
-
-## Deploy with Nitro
-
-This project uses Nitro as a generic server adapter, so it can run on any Node-compatible host.
-
-```bash
-npm run build
-node dist/server/index.mjs
-```
-
-The build output is a self-contained Node server. To deploy, push the `dist/` directory to your host (Render, Fly.io, your own VPS, etc.) and run the server command above.
-
-For host-specific presets (Vercel, Netlify, Cloudflare, AWS Lambda, etc.) and tuning, see https://v3.nitro.build/deploy.
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
-
-## Licença
-
-O código deste repositório está sob a licença [MIT](LICENSE).
-
-Fotos, nome, textos, redes sociais e as marcas dos projetos (RayTickets, Planeja Post) ficam de fora e continuam reservados.
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vitorhcesar/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/vitorhcesar)
