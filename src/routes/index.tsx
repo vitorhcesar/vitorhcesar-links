@@ -50,13 +50,15 @@ function Home() {
 
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted">
             Transformo ideias em{' '}
-            <span className="font-semibold text-primary-light">produtos digitais.</span>
+            <span className="font-semibold text-primary-light">
+              produtos digitais.
+            </span>
           </p>
         </header>
 
         <nav aria-label="Links" className="mt-8 flex flex-col gap-3">
           {cardLinks.map((link, index) => (
-            <LinkCard key={link.type} link={link} index={index} />
+            <LinkCard key={link.href} link={link} index={index} />
           ))}
         </nav>
 
