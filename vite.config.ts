@@ -10,6 +10,13 @@ import { nitro } from 'nitro/vite'
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
+  build: {
+    assetsInlineLimit(filePath) {
+      if (filePath.includes('/avatars/') || filePath.includes('\\avatars\\')) {
+        return false
+      }
+    },
+  },
   plugins: [
     devtools(),
     nitro({ rollupConfig: { external: [/^@sentry\//] } }),

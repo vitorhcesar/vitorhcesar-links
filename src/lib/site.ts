@@ -1,3 +1,8 @@
+import avatarPythonAvif from '#/assets/avatars/avatar-apostila-python.avif'
+import avatarPythonWebp from '#/assets/avatars/avatar-apostila-python.webp'
+import avatarJavascriptAvif from '#/assets/avatars/avatar-desafios-javascript.avif'
+import avatarJavascriptWebp from '#/assets/avatars/avatar-desafios-javascript.webp'
+
 export const siteConfig = {
   name: 'Vitor Hugo',
   title: 'Vitor Hugo | Links Oficiais',
@@ -59,13 +64,26 @@ export type TLinkItemType =
   | 'email'
   | 'project'
 
+export interface ICustomImageAvatar {
+  type: 'custom-image'
+  src: string
+  avif?: string
+  alt: string
+}
+
 export interface ILinkItem {
   type: TLinkItemType
   label: string
   description: string
   href: string
   external: boolean
-  avatar?: string
+  avatar?: string | ICustomImageAvatar
+}
+
+export function isCustomImageAvatar(
+  avatar: ILinkItem['avatar'],
+): avatar is ICustomImageAvatar {
+  return typeof avatar === 'object'
 }
 
 export function buildSocialLinks(): ILinkItem[] {
@@ -145,6 +163,12 @@ export function buildCardLinks(): ILinkItem[] {
       description: 'Aprenda Python de UMA VEZ POR TODAS',
       href: siteConfig.pythonApostilaUrl,
       external: true,
+      avatar: {
+        type: 'custom-image',
+        src: avatarPythonWebp,
+        avif: avatarPythonAvif,
+        alt: 'Capa da apostila Aprenda Python de UMA VEZ POR TODAS',
+      },
     },
     {
       type: 'product',
@@ -152,6 +176,12 @@ export function buildCardLinks(): ILinkItem[] {
       description: '100+ desafios de JavaScript',
       href: siteConfig.javascriptDesafiosUrl,
       external: true,
+      avatar: {
+        type: 'custom-image',
+        src: avatarJavascriptWebp,
+        avif: avatarJavascriptAvif,
+        alt: 'Capa do material 100+ desafios de JavaScript',
+      },
     },
     {
       type: 'store',
