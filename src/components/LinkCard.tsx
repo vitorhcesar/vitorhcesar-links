@@ -1,18 +1,21 @@
 import { GithubIcon } from '#/components/icons/GithubIcon'
 import { cn } from '#/lib/cn'
-import type { ILinkItem, TLinkItemType } from '#/lib/site'
-import { siteConfig } from '#/lib/site'
+import type { ICustomImageAvatar, ILinkItem, TLinkItemType } from '#/lib/site'
+import { isCustomImageAvatar, siteConfig } from '#/lib/site'
 import {
-    ArrowRight,
-    ExternalLink,
-    Globe,
-    Mail,
-    ShoppingBag,
+  ArrowRight,
+  BookOpen,
+  Code,
+  ExternalLink,
+  Globe,
+  Mail,
+  MessageCircle,
+  ShoppingBag,
 } from 'lucide-react'
 import type { CSSProperties, ReactNode } from 'react'
 import { useState } from 'react'
 
-function getLinkIcon(type: TLinkItemType): ReactNode {
+function getLinkIcon(type: TLinkItemType, href?: string): ReactNode {
   switch (type) {
     case 'portfolio':
       return <Globe className="size-5" aria-hidden="true" />
@@ -22,24 +25,73 @@ function getLinkIcon(type: TLinkItemType): ReactNode {
       return <GithubIcon />
     case 'store':
       return <ShoppingBag className="size-5" aria-hidden="true" />
+    case 'product':
+      return href === siteConfig.pythonApostilaUrl ? (
+        <BookOpen className="size-5" aria-hidden="true" />
+      ) : (
+        <Code className="size-5" aria-hidden="true" />
+      )
+    case 'community':
+      return <MessageCircle className="size-5" aria-hidden="true" />
     case 'email':
       return <Mail className="size-5" aria-hidden="true" />
   }
 }
 
-function getLinkAvatarSrc(link: ILinkItem): string {
-  if (link.avatar) return link.avatar
+function getLinkAvatarSrc(link: ILinkItem): string | null {
+  if (isCustomImageAvatar(link.avatar)) return null
+  if (typeof link.avatar === 'string') return link.avatar
   if (link.type === 'store') {
     return new URL('/favicon-32x32.png', siteConfig.storeUrl).href
+  }
+  if (link.type === 'product' || link.type === 'community') {
+    return null
   }
   return siteConfig.avatar
 }
 
+const avatarImageClassName =
+  'size-12 shrink-0 rounded-xl bg-white/5 object-cover'
+
+function CustomImageAvatar({
+  avatar,
+  onError,
+}: {
+  avatar: ICustomImageAvatar
+  onError: () => void
+}) {
+  return (
+    <picture className="block size-12 shrink-0 overflow-hidden rounded-xl bg-white/5">
+      {avatar.avif ? <source type="image/avif" srcSet={avatar.avif} /> : null}
+      <img
+        src={avatar.src}
+        alt={avatar.alt}
+        width={48}
+        height={48}
+        loading="lazy"
+        decoding="async"
+        className={avatarImageClassName}
+        onError={onError}
+      />
+    </picture>
+  )
+}
+
 function LinkAvatar({ link }: { link: ILinkItem }) {
   const [useFallback, setUseFallback] = useState(false)
-  const icon = getLinkIcon(link.type)
+  const icon = getLinkIcon(link.type, link.href)
+  const src = getLinkAvatarSrc(link)
 
-  if (useFallback) {
+  if (!useFallback && isCustomImageAvatar(link.avatar)) {
+    return (
+      <CustomImageAvatar
+        avatar={link.avatar}
+        onError={() => setUseFallback(true)}
+      />
+    )
+  }
+
+  if (useFallback || !src) {
     return (
       <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
         {icon}
@@ -49,7 +101,7 @@ function LinkAvatar({ link }: { link: ILinkItem }) {
 
   return (
     <img
-      src={getLinkAvatarSrc(link)}
+      src={src}
       alt=""
       width={48}
       height={48}
@@ -65,7 +117,7 @@ function LinkAvatar({ link }: { link: ILinkItem }) {
 }
 
 export function LinkCard({ link, index }: { link: ILinkItem; index: number }) {
-  const icon = getLinkIcon(link.type)
+  const icon = getLinkIcon(link.type, link.href)
 
   return (
     <a

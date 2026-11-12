@@ -1,3 +1,8 @@
+import avatarPythonAvif from '#/assets/avatars/avatar-apostila-python.avif'
+import avatarPythonWebp from '#/assets/avatars/avatar-apostila-python.webp'
+import avatarJavascriptAvif from '#/assets/avatars/avatar-desafios-javascript.avif'
+import avatarJavascriptWebp from '#/assets/avatars/avatar-desafios-javascript.webp'
+
 export const siteConfig = {
   name: 'Vitor Hugo',
   title: 'Vitor Hugo | Links Oficiais',
@@ -37,15 +42,20 @@ export const siteConfig = {
   email: import.meta.env.VITE_CONTACT_EMAIL as string | undefined,
   whatsappNumber: import.meta.env.VITE_WHATSAPP_NUMBER as string | undefined,
   storeUrl: 'https://loja.vitorhcesar.com.br',
+  pythonApostilaUrl:
+    'https://loja.vitorhcesar.com.br/product/cmwcrrx3c000108igmvg1jnts',
+  javascriptDesafiosUrl:
+    'https://loja.vitorhcesar.com.br/product/cmwcrxubv000007lby7ge6428',
+  communityUrl: 'https://chat.whatsapp.com/KVqhIZKWXpD4lXf7CfFdCd',
   avatar: '/images/social-avatar.webp',
-  rayticketsUrl: 'https://app.raytickets.com',
-  planejaPostUrl: 'https://app.planejapost.com',
 } as const
 
 export type TLinkItemType =
   | 'portfolio'
   | 'github'
   | 'store'
+  | 'product'
+  | 'community'
   | 'instagram'
   | 'tiktok'
   | 'youtube'
@@ -54,13 +64,26 @@ export type TLinkItemType =
   | 'email'
   | 'project'
 
+export interface ICustomImageAvatar {
+  type: 'custom-image'
+  src: string
+  avif?: string
+  alt: string
+}
+
 export interface ILinkItem {
   type: TLinkItemType
   label: string
   description: string
   href: string
   external: boolean
-  avatar?: string
+  avatar?: string | ICustomImageAvatar
+}
+
+export function isCustomImageAvatar(
+  avatar: ILinkItem['avatar'],
+): avatar is ICustomImageAvatar {
+  return typeof avatar === 'object'
 }
 
 export function buildSocialLinks(): ILinkItem[] {
@@ -127,6 +150,40 @@ export function buildSocialLinks(): ILinkItem[] {
 export function buildCardLinks(): ILinkItem[] {
   const links: ILinkItem[] = [
     {
+      type: 'portfolio',
+      label: 'Fale comigo sobre seu projeto!',
+      description: 'Portfólio',
+      href: siteConfig.portfolioUrl,
+      external: true,
+      avatar: '/images/vh-avatar.png',
+    },
+    {
+      type: 'product',
+      label: 'Fique avançado em Python',
+      description: 'Aprenda Python de UMA VEZ POR TODAS',
+      href: siteConfig.pythonApostilaUrl,
+      external: true,
+      avatar: {
+        type: 'custom-image',
+        src: avatarPythonWebp,
+        avif: avatarPythonAvif,
+        alt: 'Capa da apostila Aprenda Python de UMA VEZ POR TODAS',
+      },
+    },
+    {
+      type: 'product',
+      label: 'Fique avançado em JavaScript',
+      description: '100+ desafios de JavaScript',
+      href: siteConfig.javascriptDesafiosUrl,
+      external: true,
+      avatar: {
+        type: 'custom-image',
+        src: avatarJavascriptWebp,
+        avif: avatarJavascriptAvif,
+        alt: 'Capa do material 100+ desafios de JavaScript',
+      },
+    },
+    {
       type: 'store',
       label: 'Minha loja',
       description: new URL(siteConfig.storeUrl).hostname,
@@ -134,28 +191,11 @@ export function buildCardLinks(): ILinkItem[] {
       external: true,
     },
     {
-      type: 'portfolio',
-      label: 'Meu Site',
-      description: new URL(siteConfig.portfolioUrl).hostname,
-      href: siteConfig.portfolioUrl,
+      type: 'community',
+      label: 'Comunidade VH',
+      description: 'Grupo no WhatsApp',
+      href: siteConfig.communityUrl,
       external: true,
-      avatar: '/images/vh-avatar.png',
-    },
-    {
-      type: 'project',
-      label: 'PlanejaPost',
-      description: 'Agende e publique conteúdo em 6 redes sociais',
-      href: siteConfig.planejaPostUrl,
-      external: true,
-      avatar: '/images/planeja-post-avatar.png',
-    },
-    {
-      type: 'project',
-      label: 'RayTickets',
-      description: 'Atendimento e vendas pelo WhatsApp com CRM e automações',
-      href: siteConfig.rayticketsUrl,
-      external: true,
-      avatar: '/images/raytickets-avatar.png',
     },
   ]
 
